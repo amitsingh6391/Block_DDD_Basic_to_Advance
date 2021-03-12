@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
+import 'package:todo_application_ddd/injection.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  configureInjection(Environment.prod);
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
