@@ -8,11 +8,10 @@ import 'package:todo_application_ddd/domain/auth/auth_failure.dart';
 import 'package:todo_application_ddd/domain/auth/i_auth_facade.dart';
 import 'package:todo_application_ddd/domain/auth/user.dart';
 import 'package:todo_application_ddd/domain/auth/value_objects.dart';
-import 'package:todo_application_ddd/domain/core/errors.dart';
+// import 'package:todo_application_ddd/domain/core/errors.dart';
 import './firebase_user_mapper.dart';
 
-@lazySingleton
-@RegisterAs(IAuthFacade)
+@LazySingleton(as: IAuthFacade)
 class FirebaseAuthFacade implements IAuthFacade {
   final FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;
