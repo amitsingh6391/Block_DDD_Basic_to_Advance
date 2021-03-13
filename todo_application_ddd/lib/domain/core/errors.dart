@@ -1,5 +1,7 @@
 import 'package:todo_application_ddd/domain/core/failures.dart';
 
+class NotAuthenticatedError extends Error {}
+
 class UnexpectedValueError extends Error {
   final ValueFailure valueFailure;
 
