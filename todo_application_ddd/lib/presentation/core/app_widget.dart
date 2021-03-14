@@ -6,6 +6,8 @@ import 'package:todo_application_ddd/injection.dart';
 import 'package:todo_application_ddd/presentation/routes/router.gr.dart';
 import 'package:todo_application_ddd/presentation/sign_in/sign_in_page.dart';
 
+import "package:todo_application_ddd/presentation/routes/router.gr.dart" as r;
+
 class AppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,9 @@ class AppWidget extends StatelessWidget {
       child: MaterialApp(
         title: 'Notes',
         debugShowCheckedModeBanner: false,
-        builder: ExtendedNavigator(router: MyRouter()),
+        builder:
+            // ExtendedNavigator(router: Router()),
+            ExtendedNavigator.builder<r.Router>(router: r.Router()),
         theme: ThemeData.light().copyWith(
           primaryColor: Colors.green[800],
           accentColor: Colors.blueAccent,
