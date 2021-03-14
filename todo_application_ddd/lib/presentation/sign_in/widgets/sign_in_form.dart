@@ -27,12 +27,10 @@ class SignInForm extends StatelessWidget {
               ).show(context);
             },
             (_) {
-    ExtendedNavigator.of(context)
-              .pushReplacementNamed(Routes.notesOverviewPage),
-            
-
-            context.bloc<AuthBloc>().add(const AuthEvent.authCheckRequested());
-            
+              ExtendedNavigator.of(context).replace(Routes.notesOverviewPage);
+              context
+                  .bloc<AuthBloc>()
+                  .add(const AuthEvent.authCheckRequested());
             },
           ),
         );
@@ -41,6 +39,7 @@ class SignInForm extends StatelessWidget {
         return Form(
           autovalidate: state.showErrorMessages,
           child: ListView(
+            padding: const EdgeInsets.all(8),
             children: [
               const Text(
                 '📝',

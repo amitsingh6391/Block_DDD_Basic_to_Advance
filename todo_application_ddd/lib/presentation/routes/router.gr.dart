@@ -33,19 +33,19 @@ class Router extends RouterBase {
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
   final _pagesMap = <Type, AutoRouteFactory>{
-    SplashPage: (RouteData data) {
+    SplashPage: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => SplashPage(),
         settings: data,
       );
     },
-    SignInPage: (RouteData data) {
+    SignInPage: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => SignInPage(),
         settings: data,
       );
     },
-    NotesOverviewPage: (RouteData data) {
+    NotesOverviewPage: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => NotesOverviewPage(),
         settings: data,
@@ -54,15 +54,14 @@ class Router extends RouterBase {
   };
 }
 
-// *************************************************************************
-// Navigation helper methods extension
-// **************************************************************************
+/// ************************************************************************
+/// Navigation helper methods extension
+/// *************************************************************************
+extension RouterExtendedNavigatorStateX on ExtendedNavigatorState {
+  Future<dynamic> pushSplashPage() => push<dynamic>(Routes.splashPage);
 
-extension RouterNavigationHelperMethods on ExtendedNavigatorState {
-  Future<dynamic> pushSplashPage() => pushNamed<dynamic>(Routes.splashPage);
-
-  Future<dynamic> pushSignInPage() => pushNamed<dynamic>(Routes.signInPage);
+  Future<dynamic> pushSignInPage() => push<dynamic>(Routes.signInPage);
 
   Future<dynamic> pushNotesOverviewPage() =>
-      pushNamed<dynamic>(Routes.notesOverviewPage);
+      push<dynamic>(Routes.notesOverviewPage);
 }

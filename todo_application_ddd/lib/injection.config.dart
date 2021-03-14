@@ -5,6 +5,7 @@
 // **************************************************************************
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:injectable/injectable.dart';
 import 'package:todo_application_ddd/application/notes/note_form/note_form_bloc.dart';
 import 'package:todo_application_ddd/infrastructure/core/firebase_injectable_module.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,23 +20,27 @@ import 'package:todo_application_ddd/application/auth/auth_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:todo_application_ddd/infrastructure/notes/note_repository.dart';
 
-void $initGetIt(GetIt g, {String environment}) {
+/// adds generated dependencies
+/// to the provided [GetIt] instance
+GetIt $initGetIt(
+  GetIt get, {
+  String environment,
+  EnvironmentFilter environmentFilter,
+}) {
+  final gh = GetItHelper(get, environment, environmentFilter);
   final firebaseInjectableModule = _$FirebaseInjectableModule();
-  g.registerLazySingleton<FirebaseAuth>(
-      () => firebaseInjectableModule.firebaseAuth);
-  g.registerLazySingleton<Firestore>(() => firebaseInjectableModule.firestore);
-  g.registerLazySingleton<GoogleSignIn>(
-      () => firebaseInjectableModule.googleSignIn);
-  g.registerLazySingleton<IAuthFacade>(
-      () => FirebaseAuthFacade(g<FirebaseAuth>(), g<GoogleSignIn>()));
-  g.registerLazySingleton<INoteRepository>(
-      () => NoteRepository(g<Firestore>()));
-  g.registerFactory<NoteActorBloc>(() => NoteActorBloc(g<INoteRepository>()));
-  g.registerFactory<NoteFormBloc>(() => NoteFormBloc(g<INoteRepository>()));
-  g.registerFactory<NoteWatcherBloc>(
-      () => NoteWatcherBloc(g<INoteRepository>()));
-  g.registerFactory<SignInFormBloc>(() => SignInFormBloc(g<IAuthFacade>()));
-  g.registerFactory<AuthBloc>(() => AuthBloc(g<IAuthFacade>()));
+  gh.lazySingleton<FirebaseAuth>(() => firebaseInjectableModule.firebaseAuth);
+  gh.lazySingleton<Firestore>(() => firebaseInjectableModule.firestore);
+  gh.lazySingleton<GoogleSignIn>(() => firebaseInjectableModule.googleSignIn);
+  gh.lazySingleton<IAuthFacade>(
+      () => FirebaseAuthFacade(get<FirebaseAuth>(), get<GoogleSignIn>()));
+  gh.lazySingleton<INoteRepository>(() => NoteRepository(get<Firestore>()));
+  gh.factory<NoteActorBloc>(() => NoteActorBloc(get<INoteRepository>()));
+  gh.factory<NoteFormBloc>(() => NoteFormBloc(get<INoteRepository>()));
+  gh.factory<NoteWatcherBloc>(() => NoteWatcherBloc(get<INoteRepository>()));
+  gh.factory<SignInFormBloc>(() => SignInFormBloc(get<IAuthFacade>()));
+  gh.factory<AuthBloc>(() => AuthBloc(get<IAuthFacade>()));
+  return get;
 }
 
 class _$FirebaseInjectableModule extends FirebaseInjectableModule {}
