@@ -7,6 +7,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:todo_application_ddd/domain/notes/note.dart';
+import 'package:todo_application_ddd/presentation/notes/note_form/note_form_page.dart';
 import 'package:todo_application_ddd/presentation/splash/splash_page.dart';
 import 'package:todo_application_ddd/presentation/sign_in/sign_in_page.dart';
 import 'package:todo_application_ddd/presentation/notes/notes_overview/notes_overview_page.dart';
@@ -15,10 +17,12 @@ class Routes {
   static const String splashPage = '/';
   static const String signInPage = '/sign-in-page';
   static const String notesOverviewPage = '/notes-overview-page';
+  static const String noteFormPage = '/note-form-page';
   static const all = <String>{
     splashPage,
     signInPage,
     notesOverviewPage,
+    noteFormPage,
   };
 }
 
@@ -29,6 +33,7 @@ class Router extends RouterBase {
     RouteDef(Routes.splashPage, page: SplashPage),
     RouteDef(Routes.signInPage, page: SignInPage),
     RouteDef(Routes.notesOverviewPage, page: NotesOverviewPage),
+    RouteDef(Routes.noteFormPage, page: NoteFormPage),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -51,6 +56,17 @@ class Router extends RouterBase {
         settings: data,
       );
     },
+    NoteFormPage: (data) {
+      final args = data.getArgs<NoteFormPageArguments>(nullOk: false);
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => NoteFormPage(
+          key: args.key,
+          editedNote: args.editedNote,
+        ),
+        settings: data,
+        fullscreenDialog: true,
+      );
+    },
   };
 }
 
@@ -64,4 +80,23 @@ extension RouterExtendedNavigatorStateX on ExtendedNavigatorState {
 
   Future<dynamic> pushNotesOverviewPage() =>
       push<dynamic>(Routes.notesOverviewPage);
+
+  Future<dynamic> pushNoteFormPage({
+    Key key,
+    @required Note editedNote,
+  }) =>
+      push<dynamic>(
+        Routes.noteFormPage,
+        arguments: NoteFormPageArguments(key: key, editedNote: editedNote),
+      );
+}
+
+/// ************************************************************************
+/// Arguments holder classes
+/// *************************************************************************
+/// NoteFormPage arguments holder class
+class NoteFormPageArguments {
+  final Key key;
+  final Note editedNote;
+  NoteFormPageArguments({this.key, @required this.editedNote});
 }
