@@ -11,7 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  auto_route: ^0.6.7
+  auto_route: ^0.6.9
   cloud_firestore: ^0.14.0+2
   dartz: ^0.9.1
   firebase_auth: ^0.18.0+1
@@ -19,7 +19,8 @@ dependencies:
   flushbar: ^1.10.4
   flutter_bloc: ^6.0.1
   flutter_hooks: ^0.13.0
-  freezed_annotation: ^0.11.0+1
+  flutter_slidable: ^0.5.7
+  freezed_annotation: ^0.12.0
   get_it: ^4.0.4
   google_sign_in: ^4.5.3
   injectable: ^1.0.4
@@ -33,9 +34,9 @@ dev_dependencies:
   flutter_test:
 
     sdk: flutter
-  auto_route_generator: ^0.6.8
+  auto_route_generator: ^0.6.10
   build_runner: null
-  freezed: ^0.11.5
+  freezed: ^0.12.2
   injectable_generator: ^1.0.4
   json_serializable: ^3.3.0
   lint: ^1.2.0
